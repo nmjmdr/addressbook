@@ -5,9 +5,9 @@ import (
 	"github.com/pkg/errors"
 )
 
-type Cache interface {
-	Add(key string, val interface{}) error
-	Get(key string) (interface{}, error)
+type ContactCache interface {
+	Add(key string, contact models.Contact) error
+	Get(key string) (*models.Contact, error)
 	Del(key string) error
 }
 
@@ -22,7 +22,7 @@ type Store interface {
 }
 
 type store struct {
-	cache Cache
+	cache ContactCache
 	proxy AutopilotProxy
 }
 
@@ -57,7 +57,7 @@ func (s *store) Get(idOrEmail string) ([]models.Contact, error) {
 	}
 	if val != nil {
 		return []models.Contact{
-			val.(models.Contact),
+			*val,
 		}, nil
 	}
 	contacts, err := s.proxy.Get(idOrEmail)
@@ -87,7 +87,7 @@ func (s *store) Upsert(contact models.Contact) error {
 	return nil
 }
 
-func NewStore(cache Cache, proxy AutopilotProxy) Store {
+func NewStore(cache ContactCache, proxy AutopilotProxy) Store {
 	return &store {
 		cache: cache,
 		proxy: proxy,

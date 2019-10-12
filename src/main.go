@@ -6,6 +6,8 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"fmt"
+	"addressbook/configuration"
 )
 
 func handleExit() {
@@ -28,6 +30,9 @@ func main() {
 			os.Exit(0)
 		}
 	}()
+
+	config, err := configuration.ReadConfig()
+	fmt.Println(config, err)
 
 	logrus.Println("API listening on: %s ...", listenAddress)
 	router.Start(listenAddress)

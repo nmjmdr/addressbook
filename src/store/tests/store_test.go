@@ -12,7 +12,7 @@ func Test_Given_That_Item_Is_Present_In_Cache_Against_Id_It_Should_Fetch_It_From
 	ctrl := NewController(t)
 	defer ctrl.Finish()
 
-	cache := mocks.NewMockCache(ctrl)
+	cache := mocks.NewMockContactCache(ctrl)
 	proxy := mocks.NewMockAutopilotProxy(ctrl)
 
 	id := "1"
@@ -24,7 +24,7 @@ func Test_Given_That_Item_Is_Present_In_Cache_Against_Id_It_Should_Fetch_It_From
 	cache.
 		EXPECT().
 		Get(Any()).
-		Return(contact, nil).
+		Return(&contact, nil).
 		Times(1)
 
 	// expect that proxy should not be called
@@ -50,7 +50,7 @@ func Test_Given_That_Item_Is_Present_In_Cache_Against_Email_It_Should_Fetch_It_F
 	ctrl := NewController(t)
 	defer ctrl.Finish()
 
-	cache := mocks.NewMockCache(ctrl)
+	cache := mocks.NewMockContactCache(ctrl)
 	proxy := mocks.NewMockAutopilotProxy(ctrl)
 
 	id := "1"
@@ -62,7 +62,7 @@ func Test_Given_That_Item_Is_Present_In_Cache_Against_Email_It_Should_Fetch_It_F
 	cache.
 		EXPECT().
 		Get(Any()).
-		Return(contact, nil).
+		Return(&contact, nil).
 		Times(1)
 
 	// expect that proxy should not be called
@@ -88,7 +88,7 @@ func Test_Given_That_Item_Is_Not_Present_In_Cache_It_Should_Fetch_It_From_API_An
 	ctrl := NewController(t)
 	defer ctrl.Finish()
 
-	cache := mocks.NewMockCache(ctrl)
+	cache := mocks.NewMockContactCache(ctrl)
 	proxy := mocks.NewMockAutopilotProxy(ctrl)
 
 	id := "1"
@@ -138,7 +138,7 @@ func Test_When_Item_Is_Updated_It_Should_It_Should_Invoke_Upsert_API_And_Remove_
 	ctrl := NewController(t)
 	defer ctrl.Finish()
 
-	cache := mocks.NewMockCache(ctrl)
+	cache := mocks.NewMockContactCache(ctrl)
 	proxy := mocks.NewMockAutopilotProxy(ctrl)
 
 	id := "1"

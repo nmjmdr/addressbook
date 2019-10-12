@@ -10,60 +10,60 @@ import (
 	reflect "reflect"
 )
 
-// MockCache is a mock of Cache interface
-type MockCache struct {
+// MockContactCache is a mock of ContactCache interface
+type MockContactCache struct {
 	ctrl     *gomock.Controller
-	recorder *MockCacheMockRecorder
+	recorder *MockContactCacheMockRecorder
 }
 
-// MockCacheMockRecorder is the mock recorder for MockCache
-type MockCacheMockRecorder struct {
-	mock *MockCache
+// MockContactCacheMockRecorder ßis the mock recorder for MockContactCache
+type MockContactCacheMockRecorder struct {
+	mock *MockContactCache
 }
 
-// NewMockCache creates a new mock instance
-func NewMockCache(ctrl *gomock.Controller) *MockCache {
-	mock := &MockCache{ctrl: ctrl}
-	mock.recorder = &MockCacheMockRecorder{mock}
+// NewMockContactCache creates a new mock instance
+func NewMockContactCache(ctrl *gomock.Controller) *MockContactCache {
+	mock := &MockContactCache{ctrl: ctrl}
+	mock.recorder = &MockContactCacheMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use
-func (m *MockCache) EXPECT() *MockCacheMockRecorder {
+func (m *MockContactCache) EXPECT() *MockContactCacheMockRecorder {
 	return m.recorder
 }
 
 // Add mocks base method
-func (m *MockCache) Add(key string, val interface{}) error {
+func (m *MockContactCache) Add(key string, contact models.Contact) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Add", key, val)
+	ret := m.ctrl.Call(m, "Add", key, contact)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // Add indicates an expected call of Add
-func (mr *MockCacheMockRecorder) Add(key, val interface{}) *gomock.Call {
+func (mr *MockContactCacheMockRecorder) Add(key, contact interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Add", reflect.TypeOf((*MockCache)(nil).Add), key, val)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Add", reflect.TypeOf((*MockContactCache)(nil).Add), key, contact)
 }
 
 // Get mocks base method
-func (m *MockCache) Get(key string) (interface{}, error) {
+func (m *MockContactCache) Get(key string) (*models.Contact, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", key)
-	ret0, _ := ret[0].(interface{})
+	ret0, _ := ret[0].(*models.Contact)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Get indicates an expected call of Get
-func (mr *MockCacheMockRecorder) Get(key interface{}) *gomock.Call {
+func (mr *MockContactCacheMockRecorder) Get(key interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockCache)(nil).Get), key)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockContactCache)(nil).Get), key)
 }
 
 // Del mocks base method
-func (m *MockCache) Del(key string) error {
+func (m *MockContactCache) Del(key string) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Del", key)
 	ret0, _ := ret[0].(error)
@@ -71,9 +71,9 @@ func (m *MockCache) Del(key string) error {
 }
 
 // Del indicates an expected call of Del
-func (mr *MockCacheMockRecorder) Del(key interface{}) *gomock.Call {
+func (mr *MockContactCacheMockRecorder) Del(key interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Del", reflect.TypeOf((*MockCache)(nil).Del), key)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Del", reflect.TypeOf((*MockContactCache)(nil).Del), key)
 }
 
 // MockAutopilotProxy is a mock of AutopilotProxy interface
