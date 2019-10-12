@@ -5,6 +5,8 @@ services:
   app:
     depends_on:
       - redis
+    links:
+      - redis
     build: .
     ports:
       - "8080:8080"

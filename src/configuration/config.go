@@ -8,7 +8,6 @@ import (
 const AUTOPILOT_BASE_URL = "AUTOPILOT_BASE_URL"
 const AUTOPILOT_API_KEY = "AUTOPILOT_API_KEY"
 const ADDRESS_BOOK_REDIS_ADDR = "ADDRESS_BOOK_REDIS_ADDR"
-const ADDRESS_BOOK_REDIS_PASSWORD = "ADDRESS_BOOK_REDIS_PASSWORD"
 
 type APIConfig struct {
 	BaseUrl string
@@ -16,8 +15,7 @@ type APIConfig struct {
 }
 
 type RedisConfig struct {
-	Addr     string
-	Password string
+	Addr string
 }
 
 type Values struct {
@@ -45,13 +43,9 @@ func readRedisConfig() (RedisConfig, error) {
 	if len(addr) == 0 {
 		return RedisConfig{}, fmt.Errorf("Unable to read env variable: %s", ADDRESS_BOOK_REDIS_ADDR)
 	}
-	password := os.Getenv(ADDRESS_BOOK_REDIS_PASSWORD)
-	if len(password) == 0 {
-		return RedisConfig{}, fmt.Errorf("Unable to read env variable: %s", ADDRESS_BOOK_REDIS_PASSWORD)
-	}
+
 	return RedisConfig{
-		Addr:     addr,
-		Password: password,
+		Addr: addr,
 	}, nil
 }
 

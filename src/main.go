@@ -8,6 +8,9 @@ import (
 	"syscall"
 	"fmt"
 	"addressbook/configuration"
+	"addressbook/cache"
+	"addressbook/autopilot"
+	"addressbook/store"
 )
 
 func handleExit() {
@@ -33,7 +36,16 @@ func main() {
 
 	config, err := configuration.ReadConfig()
 	fmt.Println(config, err)
+	cache := cache.NewRedisCache(config.RedisConfig.Addr, config.RedisConfig.Addr)
+	apiProxy := autopilot.NewAutoPilotProxy(config.APIConfig.BaseUrl, config.APIConfig.ApiKey)
 
-	logrus.Println("API listening on: %s ...", listenAddress)
-	router.Start(listenAddress)
+	err = cache.Ping()
+	if err != nil {
+		logrus.Fatalf("Unable to connect to redis, Error: %v", err)
+	}
+
+	st := store.NewStore(cache, apiProxy)
+
+	logrus.Printf("API listening on: %s ...\n", listenAddress)
+	router.Start(listenAddress, st)
 }

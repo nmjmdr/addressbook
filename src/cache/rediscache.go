@@ -20,6 +20,11 @@ type RedisCache struct {
 	client *redis.Client
 }
 
+func (r *RedisCache) Ping() error {
+	_, err := r.client.Ping().Result()
+	return err
+}
+
 func (r *RedisCache) Add(key string, val models.Contact) error{
 	js, err := json.Marshal(val)
 	if err != nil {
@@ -50,11 +55,12 @@ func (r *RedisCache)Del(key string) error {
 
 func NewRedisCache(address string, password string) *RedisCache {
 	r := &RedisCache{}
-	r.client = redis.NewClient(&redis.Options{
+	options := redis.Options{
 		Addr: address,
-		Password: password,
 		DB: 0,
-	})
+	}
+	
+	r.client = redis.NewClient(&options)
 	return r
 }
 
