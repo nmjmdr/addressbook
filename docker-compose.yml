@@ -5,8 +5,6 @@ services:
   app:
     depends_on:
       - redis
-    links:
-      - redis
     build: .
     environment:
       - AUTOPILOT_API_KEY # This value is picked up from host env variable (if defined) OR alternatively use secrets (preferred to use "Secrets" approch)
